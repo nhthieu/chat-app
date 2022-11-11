@@ -7,11 +7,12 @@ const router = require('./router');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const app = express()
+app.use(cors());
+
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
+    origin: "*"
   }
 });
 
@@ -46,7 +47,7 @@ io.on('connection', (socket) => {
   })
 });
 
-app.use(cors());
+
 app.use(router);
 
 const PORT = process.env.PORT || 5000;
